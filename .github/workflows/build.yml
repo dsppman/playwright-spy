@@ -43,4 +43,4 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: 'spy.min.js'
-          path: 'spy.min.js'
+          path: 'playwright_spy/spy.min.js'
