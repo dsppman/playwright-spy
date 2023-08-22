@@ -4,7 +4,7 @@ from playwright.async_api import Page as AsyncPage, BrowserContext as AsyncConte
 from playwright.sync_api import Page as SyncPage, BrowserContext as SyncContext
 
 
-__all__ = ['load_sync', 'load_async']
+__all__ = ['load_sync', 'load_async', 'pass_aliyun_sync']
 
 SCRIPT = importlib.resources.read_text(package=__package__, resource="spy.min.js")
 
