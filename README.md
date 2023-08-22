@@ -12,6 +12,7 @@ pip install playwright-spy
 
 ## Usage
 
+### Page
 ```python
 from playwright.sync_api import sync_playwright
 import playwright_spy
@@ -20,6 +21,22 @@ with sync_playwright() as p:
     browser = p.chromium.launch()
     page = browser.new_page()
     playwright_spy.load_sync(page)
+    page.goto("https://bot.sannysoft.com/")
+    page.screenshot(path="example.png", full_page=True)
+    browser.close()
+```
+
+### Context
+```python
+from playwright.sync_api import sync_playwright
+import playwright_spy
+
+with sync_playwright() as p:
+    browser = p.chromium.launch()
+    context = browser.new_context()
+    playwright_spy.load_sync(context)
+
+    page = context.new_page()
     page.goto("https://bot.sannysoft.com/")
     page.screenshot(path="example.png", full_page=True)
     browser.close()
