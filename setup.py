@@ -23,6 +23,6 @@ setuptools.setup(
     include_package_data=True,
     python_requires=">=3.5",
     install_requires=[
-        "playwright>=1.15",
+        "playwright>=1.14",
     ]
 )
