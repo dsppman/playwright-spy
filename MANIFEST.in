@@ -1,1 +1,2 @@
 include playwright_spy/spy.min.js
+include VERSION

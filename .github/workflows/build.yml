@@ -1,0 +1,46 @@
+name: Extract stealth.min.js
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Clone repository
+        run: git clone https://github.com/berstend/puppeteer-extra.git puppeteer-extra --depth=1
+      # - name: 'Fix for: error fsevents@2.1.2: The platform "linux" is incompatible with this module.'
+      #   run: npx json -I -f package.json -e 'this.resolutions={}'
+
+      - name: Build packages
+        run: |
+          cd puppeteer-extra
+          yarn install --ignore-platform
+          yarn bootstrap
+          yarn build
+
+      - name: Extract stealth.min.js
+        run: |
+          cd puppeteer-extra
+          cd packages/extract-stealth-evasions
+          node index.js
+          cp stealth.min.js spy.min.js
+          cp spy.min.js ../../../playwright_spy/
+
+      - name: Commit stealth.min.js
+        uses: EndBug/add-and-commit@v4
+        with:
+          add: 'playwright_spy/spy.min.js'
+          force: true
+          # ref: 'master'
+          message: 'Auto-updated stealth.min.js with newest evasions'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Archive production artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: 'spy.min.js'
+          path: 'playwright_spy/spy.min.js'
