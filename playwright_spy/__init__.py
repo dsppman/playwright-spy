@@ -1,4 +1,5 @@
 import importlib.resources
+from typing import Optional, Union
 
 from playwright.async_api import Page as AsyncPage, BrowserContext as AsyncContext
 from playwright.sync_api import Page as SyncPage, BrowserContext as SyncContext
@@ -9,17 +10,17 @@ __all__ = ['load_sync', 'load_async', 'pass_aliyun_sync']
 SCRIPT = importlib.resources.read_text(package=__package__, resource="spy.min.js")
 
 
-def load_sync(pw):
+def load_sync(pw: Union[SyncPage, SyncContext]) -> None:
     """teaches synchronous playwright Page to be stealthy like a ninja!
 
     pw: type must between Page or Context
     """
-    if not isinstance(pw, (SyncPage, SyncContext)):
-        raise TypeError("Unknown Type! Type must between Page or Context")
+    # if not isinstance(pw, (SyncPage, SyncContext)):
+    #     raise TypeError("Unknown Type! Type must between Page or Context")
     pw.add_init_script(SCRIPT)
 
 
-async def load_async(pw):
+async def load_async(pw: Union[AsyncPage, AsyncContext]) -> None:
     """teaches asynchronous playwright Page to be stealthy like a ninja!
 
     pw: type must between Page or Context
